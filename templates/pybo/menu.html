@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    {% load static %} <!--css, js, images 로딩 최상단에 위치!-->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <!--Bootstrap-->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <title>Title</title>
+</head>
+<body class="container">
+    <!--container-->
+    <div>
+        <!--제목-->
+        <div class="text-start mb-5">
+            <h2>임시 메뉴</h2>
+        </div>
+        <!--제목 end-->
+        <!--검색, 버튼-->
+        <div class="d-grid gap-2 d-md-flex justify-content-end">
+            <!--검색 form-->
+            <form action="#" class="col-sm-11 col-ms-11 col-lg-11 text-end">
+                <select class="form-select-sm" aria-label="Default select example">
+                    <option selected>전체</option>
+                    <option value="10">제목</option>
+                    <option value="20">내용</option>
+                    <option value="30">작성자</option>
+                </select>
+                <input type="text" placeholder="검색어" class="form-control-sm">
+                <select class="form-select-sm" aria-label="Default select example">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </form>
+            <!--검색 form end-->
+            <!--button-->
+            <div class="col-sm-1 col-ms-1 col-lg-1 text-end">
+                <input type="button" class="btn btn-primary btn-sm" value="조회">
+                <input type="button" class="btn btn-primary btn-sm" value="등록">
+            </div>
+            <!--button end-->
+        </div>
+        <!--검색, 버튼end-->
+    </div>
+    <!--table-->
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+            <tr class="table-dark text-center">
+                <th scope="col">No.</th>
+                <th scope="col">제목</th>
+                <th scope="col">설명</th>
+                <th scope="col">작성일</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <tr>
+                    <td class="text-center">1</td>
+                    <td><a href="{% url 'pybo:index' %}">질문목록</a></td>
+                    <td class="text-center">질문목록</td>
+                    <td class="text-center">2023-01-30</td>
+                </tr>
+                <tr>
+                    <td class="text-center">2</td>
+                    <td><a href="{% url 'pybo:boot_list' %}">boot_list</a></td>
+                    <td class="text-center">bootstrap 목록 템플릭</td>
+                    <td class="text-center">2023-01-31</td>
+                </tr>
+                <tr>
+                    <td class="text-center">3</td>
+                    <td><a href="{% url 'pybo:boot_reg' %}">boot_reg</a></td>
+                    <td class="text-center">bootstrap 등록 템플릿</td>
+                    <td class="text-center">2023-01-31</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--table end-->
+    <!--paging-->
+    <div class="d-grid gap-2 d-md-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <!--paging end-->
+    <!--container end-->
+</body>
+</html>

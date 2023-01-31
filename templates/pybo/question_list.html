@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %} <!--css, js, images 로딩 최상단에 위치!-->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <!--Bootstrap-->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <title>질문 목록</title>
+</head>
+<body>
+    <div class="container">
+        <!--제목-->
+        <div class="text-start mb-5">
+            <h2>질문 목록</h2>
+        </div>
+        <!--제목 end-->
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+            <tr class="table-dark text-center">
+                <th scope="col">No.</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성일</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            {% if question_list %}
+                {% for question in question_list%}
+                <tr>
+                    <td class="text-center">{{question.id}}</td>
+                    <td><a href="{% url 'pybo:detail' question.id %}">{{question.subject}}</a></td>
+                    <td class="text-center">{{question.create_date|date:"Y-m-d"}}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="99">질문이 없습니다.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    {% csrf_token %}
+</body>
+</html>

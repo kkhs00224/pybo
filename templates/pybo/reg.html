@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    {% load static %} <!--css, js, images 로딩 최상단에 위치!-->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <!--Bootstrap-->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <title>Title</title>
+</head>
+<body class="container">
+    <!--container-->
+    <div>
+        <!--제목-->
+        <div class="text-start mb-5">
+            <h2>질문 목록</h2>
+        </div>
+        <!--제목 end-->
+        <!--button-->
+        <div class="d-grid gap-2 d-md-flex justify-content-end mb-1">
+            <input type="button" class="btn btn-primary btn-sm" value="목록">
+            <input type="button" class="btn btn-primary btn-sm" value="등록">
+        </div>
+        <!--button end-->
+    </div>
+    <!--등록 form-->
+    <form action="#">
+        <div class="mb-3 row">
+            <label for="subject" class="col-sm-2 col-md-col-2 col-lg-2 col-form-label">제목</label>
+            <div class="col-sm-10 col-md-10 col-lg-10">
+                <input type="text" class="form-control" id="subject" name="subject">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="reg_id" class="col-sm-2 col-md-col-2 col-lg-2 col-form-label">등록자</label>
+            <div class="col-sm-10 col-md-10 col-lg-10">
+                <input type="text" readonly class="form-control-plaintext" id="reg_id" name="reg_id">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="content" class="col-sm-2 col-md-col-2 col-lg-2 col-form-label">내용</label>
+            <div class="col-sm-10 col-md-10 col-lg-10">
+                <textarea rows="10" cols="20" id="content" name="content" class="form-control"></textarea>
+            </div>
+        </div>
+    </form>
+    <!--등록 form end-->
+    <!--container end-->
+</body>
+</html>
