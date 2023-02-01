@@ -7,8 +7,18 @@ since 2023.01.10 Copyright (C) by '' All right reserved.
 """
 
 from django import forms
-from pybo.models import Question
+from pybo.models import Question, Answer
 
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer  # 사용할 Answer model
+
+        fields = ['content']  # AnswerForm 에서 사용할 Answer model 속성
+
+        labels = {
+            'content': '답변 내용'
+        }
 
 class QuestionForm(forms.ModelForm):
     class Meta:
