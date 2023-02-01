@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    {% load static %} <!--css, js, images 로딩 최상단에 위치!-->
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-    <!--Bootstrap-->
-    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
-    <script src="{% static 'common.js' %}"></script>
+{% extends 'base.html' %}
+{% block content %}
     <script>
         function doSave(){
             <!--console.log("save");-->
@@ -23,9 +16,6 @@
             frm.submit()
         }
     </script>
-    <title>Title</title>
-</head>
-<body>
     <!--container-->
     <div class="container">
         <!--질문-->
@@ -68,7 +58,4 @@
     <!--답변 등록 end-->
     </div>
     <!--container end-->
-
-
-</body>
-</html>
+{% endblock %}

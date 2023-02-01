@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!--container-->
+    <div class="container">
+        <div class="text-start mb-5">
+            <h2>질문 등록</h2>
+        </div>
+
+        <form method="post" action="{% url 'pybo:question_create' %}" class="post-form my-3">
+            {% csrf_token %}
+            {{ form.as_p }}  <!--모델 폼과 연결된 subject, content에 값을 저장할 수 있는 form 생성-->
+            <button type="submit" class="btn btn-primary btn-sm">저장</button>
+        </form>
+    </div>
+    <!--container end-->
+{% endblock %}

@@ -3,6 +3,26 @@ from django.http import HttpResponse
 from pybo.models import Question
 from django.utils import timezone
 from pybo.models import Answer
+from pybo.forms import QuestionForm
+
+
+def question_create(request):
+    """질문 등록"""
+    print("1. request.method:{}".format(request.method))
+    if request.method == 'POST':
+        print('2. question_create post')
+        # 저장
+        form = QuestionForm(request.POST)  # request.POST
+
+        if form.is_valid():  # form(질문 등록)이 유효하면
+            question = form.save(commit=False)  # subject, content만 저장(commit은 하지 않음)
+            question.create_date = timezone.now()
+            question.save()  # 날짜까지 생성해서 저장(commit)
+            return redirect('pybo:index')
+    else:
+        form = QuestionForm()
+        context = {'form': form}
+        return render(request, 'pybo/question_form.html', context)
 
 
 # bootstrap list

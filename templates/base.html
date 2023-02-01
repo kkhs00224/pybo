@@ -1,0 +1,21 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1.0, shrink-to-fit=no">
+    <!--favicon-->
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <!--Bootstrap-->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <script src="{% static 'common.js' %}"></script>
+    <title>Pybo</title>
+</head>
+<body>
+    <!--기본 템플릿 안에 삽입될 내용-->
+    {% block content %}
+    {% endblock %}
+    <!--기본 템플릿 안에 삽입될 내용 end-->
+</body>
+</html>
