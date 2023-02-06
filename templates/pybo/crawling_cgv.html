@@ -1,12 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
 <body class="container">
-    <!--container-->
+<!--container-->
     <div>
         <!--제목-->
         <div class="text-start mb-5">
-            <h2>질문 목록</h2>
+            <h2>무비 차트</h2>
         </div>
+        {% if context %}
+            <div class="row">
+            {% for t,r,p in context %}
+                <div class="card col-3 p-3" style="width: 18rem;">
+                    <img src="{{p}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{t}},{{r}}</h5>
+                        <p class="card-text"></p>
+                        <a href="#" class="btn btn-primary">예매하기</a>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p>
+                no data found.
+            </p>
+        {% endif %}
+
+
         <!--제목 end-->
         <!--검색, 버튼-->
         <div class="d-grid gap-2 d-md-flex justify-content-end">
@@ -42,28 +62,25 @@
         <table class="table table-striped table-hover table-bordered">
             <thead>
             <tr class="table-dark text-center">
-                <th scope="col">No.</th>
                 <th scope="col">제목</th>
-                <th scope="col">작성자</th>
-                <th scope="col">작성일</th>
-                <th scope="col">조회수</th>
+                <th scope="col">예매율</th>
+                <th scope="col">사진 주소</th>
             </tr>
             </thead>
             <tbody class="table-group-divider">
-            {% if question_list %}
-                {% for question in question_list%}
-                <tr>
-                    <td class="text-center">{{question.id}}</td>
-                    <td><a href="{% url 'pybo:detail' question.id %}">{{question.subject}}</a></td>
-                    <td class="text-center">유저정보 </td>
-                    <td class="text-center">{{question.create_date}}</td>
-                    <td class="text-end">조회수</td>
-                </tr>
-                {% endfor %}
+            {% if context %}
+            {% for t,r,p in context %}
+            <tr>
+                <td class="text-center"></td>
+                <td>{{t}}</td>
+                <td class="text-center">{{t}}</td>
+                <td class="text-center">{{p}}</td>
+            </tr>
+            {% endfor %}
             {% else %}
-                <tr>
-                    <td colspan="99">질문이 없습니다.</td>
-                </tr>
+            <tr>
+                <td colspan="99">질문이 없습니다.</td>
+            </tr>
             {% endif %}
             </tbody>
         </table>
@@ -88,8 +105,8 @@
                 </li>
             </ul>
         </nav>
-    </div>
-    <!--paging end-->
-    <!--container end-->
+</div>
+<!--paging end-->
+<!--container end-->
 </body>
 {% endblock %}

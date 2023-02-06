@@ -9,16 +9,7 @@
         <form method="post" action="{% url 'pybo:question_create' %}" class="post-form my-3">
             {% csrf_token %}
             <!--form validation 기능-->
-            {% if form.errors %}
-            <div class="alert alert-danger" role="alert">
-                {% for field in form %}
-                    {% if field.errors %}
-                        <div><strong>{{field.label}}</strong></div>
-                        {{field.errors}}
-                    {% endif %}
-                {% endfor %}
-            </div>
-            {% endif %}
+            {% include 'form_errors.html' %}
             <!--form validation 기능 end-->
 
             <div class="mb-3">

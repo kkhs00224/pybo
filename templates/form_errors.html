@@ -1,0 +1,12 @@
+<!--form validation 기능-->
+{% if form.errors %}
+<div class="alert alert-danger" role="alert">
+    {% for field in form %}
+        {% if field.errors %}
+            <div><strong>{{field.label}}</strong></div>
+            {{field.errors}}
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+<!--form validation 기능 end-->

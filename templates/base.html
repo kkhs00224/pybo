@@ -13,9 +13,13 @@
     <title>Pybo</title>
 </head>
 <body>
+    <!--네비게이션바-->
+    {% include 'navbar.html' %}
+    <!--네비게이션바 end-->
     <!--기본 템플릿 안에 삽입될 내용-->
     {% block content %}
     {% endblock %}
     <!--기본 템플릿 안에 삽입될 내용 end-->
+    <script src="{% static 'bootstrap.min.js' %}"></script>
 </body>
 </html>

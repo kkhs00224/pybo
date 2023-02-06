@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    {% load static %} <!--css, js, images 로딩 최상단에 위치!-->
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-    <!--Bootstrap-->
-    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
-    <title>Title</title>
-</head>
+{% extends 'base.html' %}
+{% block content %}
 <body class="container">
     <!--container-->
     <div>
@@ -48,4 +39,4 @@
     <!--등록 form end-->
     <!--container end-->
 </body>
-</html>
+{% endblock %}

@@ -21,5 +21,7 @@ urlpatterns = [
     path("boot/menu/", views.boot_menu, name="boot_menu"),
     # bootstrap template
     path("boot/list/", views.boot_list, name="boot_list"),
-    path("boot/reg/",views.boot_reg, name="boot_reg")
+    path("boot/reg/",views.boot_reg, name="boot_reg"),
+
+    path('crawling/cgv/',views.crawling_cgv, name='crawling_cgv')
 ]
