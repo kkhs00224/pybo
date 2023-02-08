@@ -1,23 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-    <script>
-        function doSave(){
-            <!--console.log("save");-->
-            let frm = document.answer_frm;
-            let content = frm.content.value;
-            console.log("content"+content);
-            if(!content){
-                alert("내용을 입력하세요.");
-                frm.content.focus();
-                return;
-            }
 
-            // 서버로 전송
-            frm.submit()
-        }
-    </script>
     <!--container-->
     <div class="container">
+        <!--message 표시-->
+        {% if messages %}
+            <div class="alert alert-danger" role="alert">
+                {% for message in messages %}
+                <strong>{{message.tags}}</strong>
+                <ul>
+                    <li>{{message.message}}</li>
+                </ul>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <!--message 표시 end-->
         <!--질문-->
         <h2 class="border-bottom py-2">{{question.subject}}</h2>
         <!--질문 끝-->
@@ -26,22 +23,46 @@
             연속 공백을 하나로 합침. 한 줄이 너무 길어서 넘칠 경우 자동으로 줄을 바꿉니다. -->
             <div class="card-text" style="white-space pre-line">{{question.content}}</div>
             <div class="d-flex justify-content-end">
-                <div class="badge bg-light text-dark p-2">
-                    {{question.create_date}}
+                <!--수정일-->
+                {% if question.modify_date %}
+                <div class="badge bg-light text-dark p-2 text-start">
+                    <div class="mb-2">수정일</div>
+                    <div>{{question.modify_date}}</div>
                 </div>
+                {% endif %}
+                <div class="badge bg-light text-dark p-2 text-start">
+                    <div class="mb-2">{{question.author.username}}</div>
+                    <div>{{question.create_date}}</div>
+                </div>
+            </div>
+            <!--질문 수정-->
+            <div class="my-3">
+                {% if question.author == request.user %} <!--글쓴이와 로그인한 사용자가 동일하면 -->
+                <a href="{% url 'pybo:question_modify' question.id %}" class="btn btn-sm btn-outline-secondary">수정</a>
+                <a href="javascript:void(0)" data-uri="{% url 'pybo:question_delete' question.id %}" class="btn btn-sm btn-outline-secondary del_btn">삭제</a>
+                {% endif %}
             </div>
         </div>
     <!--답변-->
         <h5 class="border-bottom py-2 my-3 card-title">{{question.answer_set.count}} 개의 답변이 있습니다.</h5>
-        <div class="card">
+        <div class="card my-3">
             <div class="card-body">
                 {% for answer in question.answer_set.all %}
                 <div class="card-text" style="white-space pre-line">{{answer.content}}</div>
                 <div class="d-flex justify-content-end">
-                <div class="badge bg-light text-dark p-2">
-                    {{answer.create_date}}
+                    <div class="badge bg-light text-dark p-2 text-start">
+                        <div class="mb-2">
+                            {{answer.author.username}}
+                        </div>
+                        <div>
+                            {{answer.create_date}}
+                        </div>
+                    </div>
+                    <div class="my-3">
+                        <a href="{% url 'pybo:answer_modify' answer.id %}" class="btn btn-sm btn-outlone-secondary">수정</a>
+                        <a href="javascript:void(0)" data-uri="{% url 'pybo:answer_delete' answer.id %}" class="btn btn-sm btn-outline-secondary del_btn">삭제</a>
+                    </div>
                 </div>
-            </div>
                 {% endfor %}
             </div>
         </div>
@@ -62,4 +83,38 @@
     <!--답변 등록 end-->
     </div>
     <!--container end-->
+{% block script %}
+    <script>
+         // 삭제
+        const del_btn = document.querySelectorAll(".del_btn");
+        console.log(del_btn);
+        //const del_btn = document.getElementsByClassName("del_btn");
+        Array.from(del_btn).forEach(function(element){
+            // click event 감지
+            element.addEventListener('click', function(){
+                console.log("click");
+                if(confirm('삭제 하시겠습니까?')){
+                    console.log('삭제 하시겠습니까?');
+                    location.href = this.dataset.uri;
+                }
+            });
+        });
+
+
+        function doSave(){
+            <!--console.log("save");-->
+            let frm = document.answer_frm;
+            let content = frm.content.value;
+            console.log("content"+content);
+            if(!content){
+                alert("내용을 입력하세요.");
+                frm.content.focus();
+                return;
+            }
+
+            // 서버로 전송
+            frm.submit()
+        }
+    </script>
+{% endblock %}
 {% endblock %}

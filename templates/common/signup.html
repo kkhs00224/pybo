@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<!--container-->
+<div class="container">
+    <div class="text-start mb-5">
+        <h2 class="border-bottom py-2">회원가입</h2>
+    </div>
+    <form action="{% url 'common:signup' %}" method="post">
+        {% csrf_token %}
+        <!--form validation-->
+        {% include 'form_errors.html' %}
+        <!--form validation end-->
+        <div class="mb-3 row">
+          <label for="username" class="form-label">사용자ID</label>
+          <input type="text" class="form-control" id="username" name="username" value="{{ form.username.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3 row">
+          <label for="password1" class="form-label">비밀번호</label>
+          <input type="password" class="form-control" id="password1" name="password1" value="{{ form.password1.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3 row">
+          <label for="password2" class="form-label">비밀번호 확인</label>
+          <input type="password" class="form-control" id="password2" name="password2" value="{{ form.password2.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3 row">
+          <label for="email" class="form-label">이메일</label>
+          <input type="email" class="form-control" id="email" name="email" value="{{ form.email.value|default_if_none:'' }}">
+        </div>
+        <div class="d-grid gap-2 mb-1 d-md-flex justify-content-stsart">
+            <button type="submit" class="btn btn-outline-primary btn-sm">회원가입</button>
+        </div>
+    </form>
+</div>
+<!--container end-->
+
+{% endblock %}

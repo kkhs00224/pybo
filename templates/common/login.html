@@ -6,6 +6,7 @@
     </div>
     <form action="{% url 'common:login' %}" method="post">
         {% csrf_token %}
+        <input type="hidden" name="next" value="{{next}}"> <!--로그인 성공 시 이동할 다음 URL-->
         <!--form validation-->
         {% include 'form_errors.html' %}
         <!--form validation end-->
