@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load pybo_filter %}
 {% block content %}
 
     <!--container-->
@@ -21,7 +22,7 @@
         <div class="card my-3">
             <!--pre line
             연속 공백을 하나로 합침. 한 줄이 너무 길어서 넘칠 경우 자동으로 줄을 바꿉니다. -->
-            <div class="card-text" style="white-space pre-line">{{question.content}}</div>
+            <div class="card-text">{{question.content|mark}}</div>
             <div class="d-flex justify-content-end">
                 <!--수정일-->
                 {% if question.modify_date %}
@@ -37,6 +38,12 @@
             </div>
             <!--질문 수정-->
             <div class="my-3">
+                <!--좋아요-->
+                <a href="javascript:void(0)" data-uri="{% url 'pybo:question_vote' question.id %}" class="recommend btn btn-sm btn-outline-secondary">
+                    좋아요
+                    <span class="badge bg-success rounded-pill">{{question.voter.count}}</span>
+                </a>
+                <!--좋아요 end-->
                 {% if question.author == request.user %} <!--글쓴이와 로그인한 사용자가 동일하면 -->
                 <a href="{% url 'pybo:question_modify' question.id %}" class="btn btn-sm btn-outline-secondary">수정</a>
                 <a href="javascript:void(0)" data-uri="{% url 'pybo:question_delete' question.id %}" class="btn btn-sm btn-outline-secondary del_btn">삭제</a>
@@ -45,9 +52,11 @@
         </div>
     <!--답변-->
         <h5 class="border-bottom py-2 my-3 card-title">{{question.answer_set.count}} 개의 답변이 있습니다.</h5>
+        {% for answer in question.answer_set.all %}
         <div class="card my-3">
+            <!--answer+answer_id-->
+            <a href="" id="answer_{{answer.id}}"></a>
             <div class="card-body">
-                {% for answer in question.answer_set.all %}
                 <div class="card-text" style="white-space pre-line">{{answer.content}}</div>
                 <div class="d-flex justify-content-end">
                     <div class="badge bg-light text-dark p-2 text-start">
@@ -58,14 +67,23 @@
                             {{answer.create_date}}
                         </div>
                     </div>
-                    <div class="my-3">
-                        <a href="{% url 'pybo:answer_modify' answer.id %}" class="btn btn-sm btn-outlone-secondary">수정</a>
-                        <a href="javascript:void(0)" data-uri="{% url 'pybo:answer_delete' answer.id %}" class="btn btn-sm btn-outline-secondary del_btn">삭제</a>
-                    </div>
+
                 </div>
-                {% endfor %}
+                <div class="my-3">
+                    <!--좋아요-->
+                    <a href="javascript:void(0)" data-uri="{% url 'pybo:answer_vote' answer.id %}" class="recommend btn btn-sm btn-outline-secondary">
+                        좋아요
+                        <span class="badge bg-success rounded-pill">{{answer.voter.count}}</span>
+                    </a>
+                    <!--좋아요 end-->
+                    {% if request.user == answer.author %} <!--본인 글만 수정 삭제-->
+                    <a href="{% url 'pybo:answer_modify' answer.id %}" class="btn btn-sm btn-outlone-secondary">수정</a>
+                    <a href="javascript:void(0)" data-uri="{% url 'pybo:answer_delete' answer.id %}" class="btn btn-sm btn-outline-secondary del_btn">삭제</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
+        {% endfor %}
     <!--답변 end-->
     <!--답변 등록-->
         <form action="{% url 'pybo:answer_create' question.id %}" method="post" class="my-3" name="answer_frm">
@@ -115,6 +133,19 @@
             // 서버로 전송
             frm.submit()
         }
+
+        // question: 좋아요
+        const like_btn = document.querySelectorAll(".recommend");
+        console.log(like_btn);
+        like_btn.forEach((element)=>{
+            element.addEventListener("click",()=>{
+                console.log("like click");
+                if(confirm("좋아요를 누르시겠습니까?")){
+                    location.href = element.dataset.uri;
+                }
+            })
+        })
+
     </script>
 {% endblock %}
 {% endblock %}

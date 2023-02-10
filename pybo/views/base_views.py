@@ -32,13 +32,27 @@ def index(request):
 
     # 입력 인자: http://127.0.0.1:8000/pybo/2
     page = request.GET.get('page', '1')  # 페이지
+    kw = request.GET.get('kw', '')  # 페이지
+    div = request.GET.get('div', '')  # 페이지
+    size = request.GET.get('size', '10')  # 페이지
     logging.info('page:{}'.format(page))
+    logging.info('page:{}'.format(kw))
+    logging.info('page:{}'.format(div))
+    logging.info('page:{}'.format(size))
 
     question_list = Question.objects.order_by('-create_date')  # order_by('-필드') DESC, order_by('필드') ASC
     # question_list = Question.objects.filter(id=99)  # order_by('-필드') DESC, order_by('필드') ASC
+    question_list = question_list.filter(subject__contains=kw)
+
+    if div == "10":
+        question_list = question_list.filter(subject__contains=kw)
+    elif div == "20":
+        question_list = question_list.filter(content__contains=kw)
+    elif div == "30":
+        question_list = question_list.filter(author__username__contains=kw)
 
     # paging
-    paginator = Paginator(question_list, 10)
+    paginator = Paginator(question_list, size)
     page_obj = paginator.get_page(page)
     # paginator.count : 전체 게시물 개수
     # paginator.per_page: 페이지당 보여줄 게시물 개수
@@ -51,7 +65,6 @@ def index(request):
     # start_index: 현재 페이지 시작 인덱스(1부터 시작)
     # end_index: 현재 페이지 끝 인덱스
 
-    context = {'question_list': page_obj}
+    context = {'question_list': page_obj, 'kw': kw, 'page': page, 'div':div}
     logging.info("page_obj:{}".format(page_obj))
     return render(request, 'pybo/question_list.html', context)
-

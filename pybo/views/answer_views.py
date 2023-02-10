@@ -10,11 +10,25 @@ import logging
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 
 from pybo.forms import AnswerForm
 from pybo.models import Question, Answer
+
+
+@login_required(login_url='common:login')
+def answer_vote(request, answer_id):
+    """답글 좋아요"""
+    logging.info("1. answer_vote answer_id".format(answer_id))
+    answer = get_object_or_404(Answer, pk=answer_id)
+
+    if request.user == answer.author:
+        messages.error(request, '본인이 작성한 글은 추천할 수 없습니다.')
+    else:
+        answer.voter.add(request.user)
+
+    return redirect('pybo:detail', question_id=answer.question.id)
 
 
 @login_required(login_url='common:login')
@@ -55,7 +69,7 @@ def answer_modify(request, answer_id):
             answer = form.save(commit=False)
             # answer.modify_date = timezone.now()
             answer.save()
-            return redirect('pybo:detail', question_id=answer.question.id)
+            return redirect('{}#answer_{}'.format(resolve_url('pybo:detail', question_id=answer.question.id), answer.id))
 
     else:  # 수정폼의 템플릿
         form = AnswerForm(instance=answer)
@@ -79,9 +93,11 @@ def answer_create(request, question_id):
 
             logging.info('3.answer.author:{}'.format(answer.author))
             answer.save()
-            return redirect('pybo:detail', question_id=question_id)
+
+            return redirect('{}#answer_{}'.format(resolve_url('pybo:detail', question_id=question_id), answer.id))
     else:
         form = AnswerForm()
+
     # form validation
     context = {'question': question, 'form ': form}
     return render(request, 'pybo/question_detail.html', context)

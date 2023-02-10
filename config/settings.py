@@ -150,7 +150,7 @@ LOGGING = {
     'handlers': {
         # 파일저장
         'file': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/python_pybo.log'),
             'encoding': 'UTF-8',
@@ -160,13 +160,19 @@ LOGGING = {
         },
         # 콘솔(터미널)에 출력
         'console': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
             'formatter': 'format1',
         },
     },
     'loggers': {
+        # sql 로그
+        'django.db.backends': {
+            'handlers': ['file', 'console'],
+            'propagate': False,
+            'level': 'DEBUG',
+        },
         # 종류
         'django.server': {
             'handlers': ['file', 'console'],

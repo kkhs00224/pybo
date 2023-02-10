@@ -18,6 +18,21 @@ from pybo.models import Question
 
 
 @login_required(login_url='common:login')
+def question_vote(request, question_id):
+    """좋아요"""
+    logging.info('1. question_vote question_id:{}'.format(question_id))
+    question = get_object_or_404(Question, pk=question_id)
+
+    # 본인 글은 추천하지 못하게
+    if request.user == question.author:
+        messages.error(request, '본인이 작성한 글은 추천할 수 없습니다.')
+    else:
+        question.voter.add(request.user)
+
+    return redirect("pybo:detail", question_id=question_id)
+
+
+@login_required(login_url='common:login')
 def question_create(request):
     """질문 등록"""
     logging.info("1. request.method:{}".format(request.method))
