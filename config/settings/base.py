@@ -14,7 +14,7 @@ from pathlib import Path
 import os  # logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # 로그인 성공 시 이동될 URL
 LOGIN_REDIRECT_URL = "/"
